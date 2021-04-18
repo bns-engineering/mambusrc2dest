@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/bns-engineering/platformbanking-presenter/common/logging"
+	"github.com/bns-engineering/mambusrc2dest/common/logging"
 	"github.com/tkanos/gonfig"
 )
 
