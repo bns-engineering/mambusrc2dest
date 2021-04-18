@@ -166,8 +166,8 @@ func getParentCaller(callDepth int) string {
 	pc, file, line, ok := runtime.Caller(callDepth)
 	fnc := runtime.FuncForPC(pc)
 	if ok {
-		if len(strings.Split(file, "/bns-engineering/mambusrc2des/t")) > 1 {
-			buffer.WriteString(strings.Split(file, "/bns-engineering/mambusrc2des/t")[1])
+		if len(strings.Split(file, "/bns-engineering/mambusrc2dest/t")) > 1 {
+			buffer.WriteString(strings.Split(file, "/bns-engineering/mambusrc2dest/t")[1])
 		} else {
 			buffer.WriteString(file)
 		}

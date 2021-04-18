@@ -7,12 +7,12 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/bns-engineering/mambusrc2des/helper"
-	"github.com/bns-engineering/mambusrc2des/logging"
-	"github.com/bns-engineering/mambusrc2des/model"
-	"github.com/bns-engineering/mambusrc2des/tcommon/config"
-	"github.com/bns-engineering/mambusrc2des/tcommon/lookup"
-	service "github.com/bns-engineering/mambusrc2des/tservice"
+	"github.com/bns-engineering/mambusrc2dest/helper"
+	"github.com/bns-engineering/mambusrc2dest/logging"
+	"github.com/bns-engineering/mambusrc2dest/model"
+	"github.com/bns-engineering/mambusrc2dest/tcommon/config"
+	"github.com/bns-engineering/mambusrc2dest/tcommon/lookup"
+	service "github.com/bns-engineering/mambusrc2dest/tservice"
 	"google.golang.org/grpc"
 )
 

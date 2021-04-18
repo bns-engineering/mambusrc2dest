@@ -3,10 +3,10 @@ package security
 import (
 	"context"
 
-	"github.com/bns-engineering/mambusrc2des/service"
-	"github.com/bns-engineering/mambusrc2des/tcommon/config"
-	"github.com/bns-engineering/mambusrc2des/tcommon/logging"
-	"github.com/bns-engineering/mambusrc2des/tcommon/lookup"
+	"github.com/bns-engineering/mambusrc2dest/service"
+	"github.com/bns-engineering/mambusrc2dest/tcommon/config"
+	"github.com/bns-engineering/mambusrc2dest/tcommon/logging"
+	"github.com/bns-engineering/mambusrc2dest/tcommon/lookup"
 	"google.golang.org/grpc"
 )
 

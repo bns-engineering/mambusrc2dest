@@ -1,6 +1,6 @@
 package controller
 
-import "github.com/bns-engineering/mambusrc2des/model"
+import "github.com/bns-engineering/mambusrc2dest/model"
 
 //Config Variable for Configuration file
 var Config *model.Configuration
