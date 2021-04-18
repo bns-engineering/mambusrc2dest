@@ -73,9 +73,9 @@ func serveHTTP(port string) error {
 	// router.HandleFunc("/account/inqcif", controller.Inqcif).Methods("POST")
 	// router.HandleFunc("/account/inqmutation", controller.Inqmutation).Methods("POST")
 
-	router.HandleFunc("/user/userinfo", controller.DepositoMature).Methods("POST")
-	router.HandleFunc("/deposito/mature", controller.DepositoMature).Methods("POST")
-	router.HandleFunc("/api/deposits/10092542497/withdrawal-transactions", controller.DepositoMature).Methods("POST")
+	// router.HandleFunc("/user/userinfo", controller.DepositoMature).Methods("POST")
+	// router.HandleFunc("/deposito/mature", controller.DepositoMature).Methods("POST")
+	router.HandleFunc("/api/deposits/{id:[0-9]+}/{category}", controller.Deposits).Methods("POST")
 	//{{server}}/api/deposits/10092542497/withdrawal-transactions
 
 	addr := ":" + port

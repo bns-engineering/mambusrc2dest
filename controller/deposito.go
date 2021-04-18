@@ -1,18 +1,90 @@
 package controller
 
 import (
+	"bytes"
 	"context"
 	"fmt"
 	"net/http"
+	"time"
 
 	"github.com/bns-engineering/mambusrc2dest/common/config"
+	"github.com/bns-engineering/mambusrc2dest/common/helper"
 	"github.com/bns-engineering/mambusrc2dest/common/lookup"
-	"github.com/bns-engineering/mambusrc2dest/helper"
 	"github.com/bns-engineering/mambusrc2dest/logging"
 	"github.com/bns-engineering/mambusrc2dest/model"
-	service "github.com/bns-engineering/mambusrc2dest/tservice"
+	service "github.com/bns-engineering/mambusrc2dest/service"
+	"github.com/bns-engineering/mambusrc2dest/util"
+	"github.com/gorilla/mux"
 	"google.golang.org/grpc"
 )
+
+func Deposits(w http.ResponseWriter, r *http.Request) {
+	// var p model.DepositoMature
+	var p interface{}
+	var resp interface{}
+	var strReply []byte
+	var rc = "06"
+	params := mux.Vars(r)
+	id := params["id"]
+	category := params["category"]
+	strIdempotency := r.Header.Get("Idempotency-Key")
+	baseUrl := r.URL.Path
+
+	if rc != lookup.INVALID_SESSIONID {
+		err := helper.DecodeJSONBody(w, r, &p)
+		logging.Log(baseUrl)
+		strlog := fmt.Sprintf("%s Request > Deposits:[%s] [%s] [%s] ", helper.GetStrtimestamp(), category, id, strIdempotency)
+		logging.Log(strlog)
+		if err != nil {
+			strlog := fmt.Sprintf("%s [%s]\n%v", err.Error(), id, strIdempotency)
+			logging.LogError(strlog)
+			rc = "30"
+		} else {
+			DoWithdrawal(w, r)
+		}
+	}
+	w, strReply = getHTTPReply(w, rc, resp)
+	// strlog := fmt.Sprintf("Reply   < [RC=%s]\n%v", rc, string(strReply))
+	strlog := fmt.Sprintf("%s Reply   > Deposits:[%s] [%s] [%s] [RC=%s] ", helper.GetStrtimestamp(), category, id, strIdempotency, rc)
+	logging.Log(strlog)
+	fmt.Fprintf(w, string(strReply))
+	return
+}
+
+func DoWithdrawal(w http.ResponseWriter, r *http.Request) {
+	// requestBody, _ := json.Marshal("")
+	requestBody := r.Body
+	timeout := time.Duration(10 * time.Second)
+	// baseUrl := config.LoadConfig().Mambu.Endpoint + `/api/gljournalentries?paginationDetails=OFF&from=` + pstrDate + `&to=` + pstrDate + `&offset=` + fmt.Sprint(noffset) + `&limit=` + fmt.Sprint(nlimit)
+	baseUrl := r.URL
+	fmt.Println(baseUrl)
+	header := r.Header
+	var hasil map[string]interface{}
+	statusCode, responseBody, err := util.SendHTTP(http.MethodPost, baseUrl, int(timeout), &hasil, header, bytes.NewBuffer(requestBody))
+
+	fmt.Println("Statuscode:", statusCode)
+	if statusCode != 200 {
+		strerror := hasil["errors"]
+		strerror = strerror.([]interface{})[0]
+		strerrordata := strerror.(map[string]interface{})
+		fmt.Println("Statuscode:", strerrordata["errorCode"])
+		fmt.Println("errorSource:", strerrordata["errorSource"])
+		fmt.Println("errorReason:", strerrordata["errorReason"])
+	}
+
+	if err != nil {
+		// hasilnya, _ := json.Marshal(err)
+		// var strlog = fmt.Sprintf("Err: %v", string(hasilnya))
+		// fmt.Println(strlog)
+		logging.Log(responseBody)
+	}
+
+	if statusCode == 200 {
+		logging.Log(responseBody)
+
+	}
+	return
+}
 
 //UserInfo Function for get User information
 func DepositoMature(w http.ResponseWriter, r *http.Request) {

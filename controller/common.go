@@ -6,8 +6,8 @@ import (
 	"net/http"
 	"strconv"
 
+	"github.com/bns-engineering/mambusrc2dest/common/helper"
 	"github.com/bns-engineering/mambusrc2dest/common/lookup"
-	"github.com/bns-engineering/mambusrc2dest/helper"
 )
 
 //getHTTPReply function
