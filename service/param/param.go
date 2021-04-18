@@ -3,9 +3,9 @@ package param
 import (
 	"context"
 
-	"github.com/bns-engineering/mambusrc2dest/tcommon/external"
-	"github.com/bns-engineering/mambusrc2dest/tcommon/logging"
-	"github.com/bns-engineering/mambusrc2dest/tcommon/lookup"
+	"github.com/bns-engineering/mambusrc2dest/common/external"
+	"github.com/bns-engineering/mambusrc2dest/common/logging"
+	"github.com/bns-engineering/mambusrc2dest/common/lookup"
 )
 
 //GetCity - get list city based on province ID

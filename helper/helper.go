@@ -11,10 +11,10 @@ import (
 	"net/http"
 	"strings"
 
+	"github.com/bns-engineering/mambusrc2dest/common/lookup"
 	"github.com/bns-engineering/mambusrc2dest/logging"
 	"github.com/bns-engineering/mambusrc2dest/model"
 	"github.com/bns-engineering/mambusrc2dest/service"
-	"github.com/bns-engineering/mambusrc2dest/tcommon/lookup"
 	"github.com/golang/gddo/httputil/header"
 	"google.golang.org/grpc"
 )
