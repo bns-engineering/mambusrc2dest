@@ -1,0 +1,52 @@
+{
+  "debug": true ,
+  "server": {
+    "Port": "9090",
+    "InquiryAddress": "127.0.0.1:8080",
+    "TransferAddress": "127.0.0.1:8085",
+    "ParamAddress": "127.0.0.1:8079",
+    "SecurityAddress": "127.0.0.1:8088",
+    "CustomerAddress": "127.0.0.1:8080"
+  },
+  "context":{
+    "timeout":2
+  },
+  "database": {
+    "host": "",
+    "port": "",
+    "user": "",
+    "pass": "",
+    "name": ""
+  },
+  "profiles": [{
+      "id" : "MATURE",
+      "processID" : "DEPOSITO",
+      "processingCode" : "MATURE",
+      "postings": [ {
+          "api" : "deposit-transactions:bulk",
+          "url": "deposits/deposit-transactions:bulk",
+          "body": {
+            "transactions": [
+                {
+                    "transactionDetails": {
+                        "transactionChannelId": "1101"
+                    },
+                    "accountId": "{SYSTEM.ACCOUNTNO}",
+                    "amount": "{SYSTEM.AMOUNT}",
+                    "notes": "test1"
+                },
+                {
+                    "transactionDetails": {
+                        "transactionChannelId": "1101"
+                    },
+                    "accountId": "ZRQT716",
+                    "amount": 200,
+                    "notes": "test2"
+                }
+              ]
+            }
+          }
+        ]
+  }]
+  
+}

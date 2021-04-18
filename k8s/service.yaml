@@ -1,0 +1,21 @@
+#kubectl apply -f service.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  finalizers:
+  - service.kubernetes.io/load-balancer-cleanup
+  labels:
+    app: presenter
+  name: presenter
+  namespace: default
+spec:
+  externalTrafficPolicy: Cluster
+  ports:
+  - name: https-rest
+    port: 9090
+    protocol: TCP
+    targetPort: 9090
+  selector:
+    app: presenter
+  sessionAffinity: None
+  type: LoadBalancer

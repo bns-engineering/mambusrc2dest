@@ -1,0 +1,25 @@
+#kubectl apply -f ./k8s/app.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: presenter
+  name: presenter
+  namespace: default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: presenter
+  template:
+    metadata:
+      labels:
+        app: presenter
+    spec:
+      containers:
+      # - image: docker.io/ferysetianto/presenter:1.0
+      - image: gcr.io/idbns-poc/presenter:1.0
+        imagePullPolicy: Always
+        name: presenter
+        ports:
+            - containerPort: 9090

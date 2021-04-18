@@ -1,0 +1,433 @@
+syntax = "proto3";
+package service;
+
+message Message {
+    string body = 1;
+}
+
+message InquiryMutationRq {
+  string partnerID        = 1;
+	string requestTimestamp = 2;
+	string signature        = 3;
+	string accountNo        = 4;
+	string startDate        = 5;
+	string endDate          = 6;
+}
+
+message InquiryMutationRp {
+  string responseCode      = 1;
+	string responseMessage   = 2;
+	string responseTimestamp = 3;
+	string accountNo         = 4;
+	string accountName       = 5;
+	string accountCurrency   = 6;
+	string startDate         = 7;
+	string endDate           = 8;
+	string dataCount         = 9;
+	repeated DetailMutation data =  10;
+}
+
+message DetailMutation {
+  string transactionDate   = 1;
+	string transactionTime   = 2;
+	string dCFlag            = 3;
+	string transactionAmount = 4;
+	string transactionName   = 5;
+	string transactionInfo   = 6;
+}
+
+message InquiryBalanceRq {
+  string  partnerID = 1;
+  string  rqTimestamp = 2;
+  string  signature = 3;
+  string  accountNo = 4;
+  
+}
+
+message InquiryBalanceRp {
+  string  responsecode = 1;
+  string  responsemessage = 2;
+  string  responsetimestamp = 3;
+  string  accountno = 4;
+  string  accountname = 5;
+  string  accountcurrency = 6;
+  string  accountbalance = 7;
+}
+
+service AccountHandler {
+    rpc InqbalanceRq(InquiryBalanceRq) returns (InquiryBalanceRp) {}
+    rpc InqMutationRq(InquiryMutationRq) returns (InquiryMutationRp) {}
+}
+
+message TrfOnUsRq {
+  string partnerID        = 1;
+	string requestTimestamp = 2;
+	string signature        = 3;
+	string transactionID    = 4;
+	string accountNo        = 5;
+	string currencyCode     = 6;
+	string destAccountNo    = 7;
+	string amount    		= 8;
+	string remark    		= 9;
+}
+
+message TrfOnUsRp {
+  string responseCode      = 1;
+	string responseMessage   = 2;
+	string responseTimestamp = 3;
+	string retReferenceID    = 4;
+}
+
+message TrfOffUsRq {
+  string  partnerID = 1;
+  string  requestTimestamp = 2;
+  string  signature = 3;
+  string  transactionID = 4;
+  string  referenceID = 5;
+  string  accountNo = 6;
+  string  currencyCode = 7;
+  string  destInstutionID = 8;
+  string  destAccountNo = 9;
+  string  amount = 10;
+  string  remark = 11;
+}
+
+message TrfOffUsRp {
+  string  responsecode = 1;
+  string  responsemessage = 2;
+  string  responsetimestamp = 3;
+  string  retReferenceID = 4;
+}
+
+message InqTrfOffUsRp {
+	string ResponseCode      = 1;
+	string ResponseMessage   = 2;
+	string ResponseTimestamp = 3;
+	string DestInstutionID   = 4;
+	string DestInstutionName = 5;
+	string DestAccountNo     = 6;
+	string DestAccountName   = 7;
+	string DestAccountCurr   = 8;
+	string DestAccountType   = 9;
+}
+
+message InqTrfOffUsRq {
+	string PartnerID        = 1;
+	string RequestTimestamp = 2;
+	string Signature        = 3;
+	string DestInstutionID  = 4;
+	string DestAccountNo    = 5;
+}
+
+message InqTrfOnUsRp {
+	string ResponseCode      = 1;
+	string ResponseMessage   = 2;
+	string ResponseTimestamp = 3;
+	string DestAccountNo     = 4;
+	string DestAccountName   = 5;
+	string DestAccountCurr   = 6;
+	string DestAccountType   = 7;
+}
+
+message InqTrfOnUsRq {
+	string PartnerID        = 1;
+	string RequestTimestamp = 2;
+	string Signature        = 3;
+	string DestAccountNo    = 4;
+}
+
+service TransferHandler {
+    rpc TransferOffUsRq(TrfOffUsRq) returns (TrfOffUsRp) {}
+    rpc TransferOnUsRq(TrfOnUsRq) returns (TrfOnUsRp) {}
+    rpc InqTransferOffUsRq(InqTrfOffUsRq) returns (InqTrfOffUsRp) {}
+    rpc InqTransferOnUsRq(InqTrfOnUsRq) returns (InqTrfOnUsRp) {}
+}
+
+message GenPartnerKeyRq {
+   	string partnerID        = 1;
+	string requestTimestamp = 2;
+	string signature        = 3;
+	string userID        = 4;
+	string publicKey		= 5;
+}
+
+message GenPartnerKeyRp {
+  	string responseCode      = 1;
+	string responseMessage   = 2;
+	string publicKey = 3;
+}
+
+message VerifySessionIdRq {
+   	string partnerID        = 1;
+	string requestTimestamp = 2;
+	string signature        = 3;
+	string sessionID        = 4;
+	string userID        = 5;
+}
+
+message VerifySessionIdRp {
+  	string responseCode      = 1;
+	string responseMessage   = 2;
+}
+
+message DecryptRq {
+   	string partnerID        = 1;
+	string requestTimestamp = 2;
+	string signature        = 3;
+	string encryptValue  = 4;
+	string userID        = 5;
+}
+
+message DecryptRp {
+  	string responseCode      = 1;
+	string responseMessage   = 2;
+	string decryptValue = 3;
+}
+
+message EncryptRq {
+   	string partnerID        = 1;
+	string requestTimestamp = 2;
+	string signature        = 3;
+	string secretMessage  = 4;
+	string userID        = 5;
+}
+
+message EncryptRp {
+  	string responseCode      = 1;
+	string responseMessage   = 2;
+	string encryptValue = 3;
+}
+
+message LoginRq {
+   	string partnerID        = 1;
+	string requestTimestamp = 2;
+	string signature        = 3;
+	string encryptValue  = 4;
+	string userID        = 5;
+}
+
+message LoginRp {
+  	string responseCode      = 1;
+	string responseMessage   = 2;
+	string sessionID = 3;
+}
+
+message GenPartnerOnboardKeyRq {
+   	string partnerID        = 1;
+	string requestTimestamp = 2;
+	string signature        = 3;
+	string publicKey		= 4;
+}
+
+message GenPartnerOnboardKeyRp {
+  	string responseCode      = 1;
+	string responseMessage   = 2;
+	string publicKey = 3;
+}
+
+service SecurityHandler {
+    rpc GeneratePartnerKey(GenPartnerKeyRq) returns (GenPartnerKeyRp) {}
+	rpc VerifySessionId(VerifySessionIdRq) returns (VerifySessionIdRp) {}
+	rpc DecryptValue(DecryptRq) returns (DecryptRp) {}
+	rpc EncryptValue(EncryptRq) returns (EncryptRp) {}
+	rpc Login(LoginRq) returns (LoginRp) {}
+	rpc GeneratePartnerOnboardingKey(GenPartnerOnboardKeyRq) returns (GenPartnerOnboardKeyRp) {}
+}
+
+message UserInfoRq {
+   	string partnerID        = 1;
+	string requestTimestamp = 2;
+	string signature        = 3;
+	string userID           = 4;
+}
+
+message UserInfoRp {
+  	string responseCode      = 1;
+	string responseMessage   = 2;
+	string cifNo             = 3;
+	string fullName          = 4;
+	string alias             = 5;
+	string lastLogin         = 6;
+	string defaultCardNo     = 7;
+	string defaultAccountNo  = 8;
+	repeated Card cards      = 9;
+}
+
+message Card {
+  string cardNo               = 1;
+  string cardSts              = 2;
+  repeated Account accounts   = 3;
+}
+
+message Account {
+  string accountNo            = 1;
+  string accountSts           = 2;
+}
+
+message UserDataRq {
+   	string partnerID        = 1;
+	string requestTimestamp = 2;
+	string signature        = 3;
+	string userID           = 4;
+}
+
+message UserDataRp {
+  	string responseCode      = 1;
+    string responseMessage   = 2;
+	string cifNo             = 3;
+	string ektpID            = 4;
+	string fullName          = 5;
+	string alias             = 6;
+	string motherName        = 7;
+	string birthDate         = 8;
+	string gender            = 9;
+	string address           = 10;
+	string phone             = 11;
+	string mobileNo          = 12;
+	string email             = 13;
+	string status            = 14;
+}
+service UserHandler {
+    rpc UserInfo(UserInfoRq) returns (UserInfoRp) {}
+    rpc UserData(UserDataRq) returns (UserDataRp) {}
+}
+
+message ProvinceRq {
+   	string partnerID        = 1;
+	string requestTimestamp = 2;
+	string signature        = 3;
+}
+
+message ProvinceRp {
+  	string responseCode      = 1;
+	repeated ProvinceType province =  2;
+}
+
+message ProvinceType {
+  string provinceID   = 1;
+  string province   = 2;
+}
+
+message CityRq {
+  string  partnerID = 1;
+  string  requestTimestamp = 2;
+  string  signature = 3;
+  string  provinceID = 4;
+}
+
+message CityRp {
+  string  responseCode = 1;
+  repeated CityType city =  2;
+}
+
+message CityType {
+  string  cityID = 1;
+  string  city = 2;
+}
+
+message DegreeRp {
+	string responseCode      = 1;
+	repeated DegreeType degree = 2;
+}
+
+message DegreeType {
+	string degreeID   = 1;
+	string degree   = 2;
+}
+
+message DegreeRq {
+	string  partnerID = 1;
+  	string  requestTimestamp = 2;
+  	string  signature = 3;
+}
+
+message IncomeRp {
+	string responseCode      = 1;
+	repeated IncomeType income = 2;
+}
+
+message IncomeRq {
+	string  partnerID = 1;
+  	string  requestTimestamp = 2;
+  	string  signature = 3;
+}
+
+message IncomeType {
+	string incomeID   = 1;
+	string income = 2;
+}
+
+message IndustrialSectorRp {
+	string responseCode      = 1;
+	repeated IndustrialSectorType industrialSector = 2;
+}
+
+message IndustrialSectorRq {
+	string  partnerID = 1;
+  	string  requestTimestamp = 2;
+  	string  signature = 3;
+}
+
+message IndustrialSectorType {
+	string industrialSectorID   = 1;
+	string industrialSector = 2;
+}
+
+message OpeningPurposeRp {
+	string responseCode      = 1;
+	repeated OpeningPurposeType openingPurpose = 2;
+}
+
+message OpeningPurposeRq {
+	string  partnerID = 1;
+  	string  requestTimestamp = 2;
+  	string  signature = 3;
+}
+
+message OpeningPurposeType {
+	string openingPurposeID   = 1;
+	string openingPurpose = 2;
+}
+
+message SourceIncomeRp {
+	string responseCode      = 1;
+	repeated SourceIncomeType sourceIncome = 2;
+}
+
+message SourceIncomeRq {
+	string  partnerID = 1;
+  	string  requestTimestamp = 2;
+  	string  signature = 3;
+}
+
+message SourceIncomeType {
+	string sourceIncomeID   = 1;
+	string sourceIncome = 2;
+}
+
+message JobTypesRp {
+	string responseCode      = 1;
+	repeated JobTypesType jobTypes = 2;
+}
+
+message JobTypesRq {
+	string  partnerID = 1;
+  	string  requestTimestamp = 2;
+  	string  signature = 3;
+}
+
+message JobTypesType {
+	string jobTypeID   = 1;
+	string jobType = 2;
+}
+
+service ParamHandler {
+    rpc Province(ProvinceRq) returns (ProvinceRp) {}
+    rpc City(CityRq) returns (CityRp) {}
+    rpc Degree(DegreeRq) returns (DegreeRp) {}
+    rpc Income(IncomeRq) returns (IncomeRp) {}
+	rpc IndustrialSector(IndustrialSectorRq) returns (IndustrialSectorRp) {}
+	rpc OpeningPurpose(OpeningPurposeRq) returns (OpeningPurposeRp) {}
+	rpc SourceIncome(SourceIncomeRq) returns (SourceIncomeRp) {}
+	rpc JobTypes(JobTypesRq) returns (JobTypesRp) {}
+}

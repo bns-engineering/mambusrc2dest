@@ -1,0 +1,19 @@
+{
+  "debug": true ,
+  "server": {
+    "Port": "9090",
+    "InquiryAddress": "inquiry:8080",
+    "TransferAddress": "transfer:8085",
+    "SecurityAddress": "security:8080"
+  },
+  "context":{
+    "timeout":2
+  },
+  "database": {
+    "host": "",
+    "port": "",
+    "user": "",
+    "pass": "",
+    "name": ""
+  }
+}
